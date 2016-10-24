@@ -1,0 +1,12 @@
+{
+  "name": "webpack-the-missing-guide",
+  "version": "0.0.0",
+  "dependencies": {
+    "lite-server": "^2.2.2",
+    "lodash": "^4.16.4",
+    "webpack": "^1.13.2"
+  },
+  "scripts": {
+    "compile": "webpack -d --progress --colors ./example-1/main.js"
+  }
+}
