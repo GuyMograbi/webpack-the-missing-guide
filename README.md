@@ -35,6 +35,9 @@ In webpack you bundle a `sass` file by writing `require('style!css!sass../style/
  - tells the sass loader to processes the resources - which converts `sass` to `css`
  - pipes the sass loader's output to css loader - which further processes the `css`, for example `url` and `@import` statements 
  - pipes the css loader's output to style loader - which adds `css` to the `dom` by injecting a `<style>` tag
+
+
+[Complete Flow](images/complete-flow.png)
  
 ## Webpack in 60 seconds
 
@@ -205,22 +208,87 @@ We actually just transpiled the source in `names.txt` into JavaScript.
 This example was pretty simple, but make it complex enough and you get Typescript :) 
 
 Lets not stop here.   
-Like all good transpilers lets add a source map and see how it is done with webpack.     
+Like all good transpilers lets add a source map and see how it is done with webpack.
 
 # Lets add a source map
 
 To generate a source map we will need to modify the `console-printer` loader just a bit. 
 
 ```
+var path = require('path');
+var sourceMap = require('source-map');
+
+module.exports = function(source){
+  var lines = source.split('\n');
+  var prints = lines.map(function(line){
+    return `console.log('${line}');`
+  }).join('\n');
+
+  // build source map
+  var SourceMapGenerator = sourceMap.SourceMapGenerator;
+
+  var relativePath = path.relative(process.cwd(), this.resourcePath);
+
+  var map = new SourceMapGenerator({
+    file: this.resourcePath,
+    sourceContent: lines
+  });
+  map.setSourceContent(relativePath,source);
+  lines.forEach(function(line, index){
+    map.addMapping({
+      generated: {
+        line: index+2,
+        column: 1
+      },
+      source:relativePath ,
+      original: {
+        line: index+1,
+        column: 1
+      }
+    });
+  });
+
+  this.callback(null, `exports.print = function(){\n\n${prints}\n}`, map.toJSON())
+};
 ```
 
-and we need to run webpack with `-d` flag. 
+Lets walk through the code:
+
+ - First require `path` and `source-map` which will help us construct the source map.
+ - Afterwards we split the lines by newline and construct the JavaScript code like before.
+ - Then we generate the source map with a simple logic - each line in `names.txt` is now lower by 1.
+ - Eventually we return the result but instead of using `return` which only allows returning a single argument, we use `this.callback` which allows sending errors, the result and source map.
+
+There are many ways to generate source maps, but webpack has a unique way of its own.
+When you generate your own source map in webpack it is crucial to pay attention to :
+
+ - The paths. Some are relative and some are absolute. Get them wrong and you will not content properly.
+ - You **have** to attach `source` as this data is lost after the loader is finished.
+ - You must return an object rather than have a `//# sourceMappingURL=app.js.map` comment (like you usually do) since webpack uglifies the code and the comment will be lost.
+
+and now lets run webpack again. This time we need to run webpack with `-d` flag to generate source map. `webpack -d --progress --colors --output-filename dist/bundle.js --entry ./example-1/main.js`
+Now you should be able to open the sources tab in developers' area and fine `names.txt` there.
+You should also be able to put a breakpoint and step over.
+
+[sourcemap results](./images/sourcemap-results.png)
+
+
+HOW COOL IS THAT?
 
 # What else can loaders do?
+
+ - Loaders can be async.
+ - Loaders can get configurations and have access to webpack's configuration
+ - Loaders can run in different hooks in webpack's build process. read about preLoaders.
+
+There's [a guide for writing loaders](https://webpack.github.io/docs/loaders.html#loader-context) but I also strongly recommend reading source for existing loaders and reading `NormalModuleMixin.js` in webpack's sources.
+It helped me clarify some stuff.
+
   
 # The meaning of it all  
 
+In this post we talked about what webpack is and what it is not.
+We saw how to use it and how to extend it with loaders.
+We drilled down to a loader implementation and saw how powerful it can be without much effort thanks to webpack's awesome api.
 
-
-
- 
+I'd love to hear about your experience with webpack in the comments below.
