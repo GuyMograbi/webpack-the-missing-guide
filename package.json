@@ -4,9 +4,11 @@
   "dependencies": {
     "lite-server": "^2.2.2",
     "lodash": "^4.16.4",
+    "source-map": "^0.5.6",
     "webpack": "^1.13.2"
   },
   "scripts": {
-    "compile": "webpack -d --progress --colors ./example-1/main.js"
+    "compile": "webpack -d --progress --colors --output-filename dist/bundle.js --entry ./example-1/main.js",
+    "server": "lite-server"
   }
 }

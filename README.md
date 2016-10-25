@@ -184,6 +184,21 @@ console.log('The Jungle Book');
 
 Which is the code we generated. 
 
+### Lets run it
+
+Technically, this code does not require a browser so we could simply `node dist/bundle.js` to see the prints.   
+But for the purpose of this post you should run `index.html` that looks like this: 
+
+```html
+<html>
+    <body>
+        <script src="dist/bundle.js"></script>
+    </body>
+</html>
+```
+
+And open the developers' area to see the prints. 
+
 ## What does it all mean? 
 
 We actually just transpiled the source in `names.txt` into JavaScript.    
@@ -194,10 +209,12 @@ Like all good transpilers lets add a source map and see how it is done with webp
 
 # Lets add a source map
 
-To generate a source map we will need to modify the console-printer just a bit. 
+To generate a source map we will need to modify the `console-printer` loader just a bit. 
 
 ```
 ```
+
+and we need to run webpack with `-d` flag. 
 
 # What else can loaders do?
   
