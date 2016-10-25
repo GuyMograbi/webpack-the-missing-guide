@@ -11,7 +11,6 @@ Webpack is an awesome module bundler that you should use if:
  - You want an easy and hassle free setup for web development
  - You want to join a big and rich community
 
-
 ## Webpack is NOT just a module bundler 
 
 Actually, Webpack is much more than just a module bundler.    
@@ -38,7 +37,7 @@ In webpack you bundle a `sass` file by writing `require('style!css!sass../style/
  - pipes the css loader's output to style loader - which adds `css` to the `dom` by injecting a `<style>` tag
 
 
-[Complete Flow](images/complete-flow.png)
+![Complete Flow](images/complete-flow.png)
  
 ## Webpack in 60 seconds
 
@@ -49,7 +48,7 @@ Lets assume our environment is a browser and so we will have an `html` file - li
 Your main JavaScript file requires all the resources you want to bundle while declaring which loader to use on each resource.       
 Here is such a `main.js` for example    
 
-```
+```javascript
 var name = require('console-printer!startcase!./name.txt');
 name.print()
 ```
@@ -68,7 +67,7 @@ Here is a [list of available loaders](https://webpack.github.io/docs/list-of-loa
 You run webpack on `main.js` by running `webpack --output-filename dist/bundle.js main.js`. 
 Webpack will write the output to `dist/bundle.js` which you reference in `index.html` like so
  
-```
+```html
 <html>
     <body>
         <script src="dist/bundle.js></script>
@@ -97,7 +96,7 @@ This is why I chose to focus on them in this post.
      
 A loader is applied on a single resource and must export a function. for example:  
 
-```
+```javascript
 module.exports = function(source) {
   return modifySource(source); 
 }
@@ -105,13 +104,13 @@ module.exports = function(source) {
 
 You can easily reference your custom loaders with a relative path 
 
-```
+```javascript
 require('../my-loaders/my-custom-loader!./some-resource.js')
 ```
 
 And you can easily configure your loader. 
 
-```
+```javascript
 require('../my-loadersmy-custom-loader?foo=bar!./some-resource.js')
 ```
 
@@ -123,7 +122,7 @@ It just happens that [webpack has a special library for that too](https://github
 
 This is the example I've shown before
 
-```
+```javascript
 var name = require('console-printer!startcase!./name.txt');
 name.print()
 ```
@@ -215,7 +214,7 @@ Like all good transpilers lets add a source map and see how it is done with webp
 
 To generate a source map we will need to modify the `console-printer` loader just a bit. 
 
-```
+```javascript
 var path = require('path');
 var sourceMap = require('source-map');
 
@@ -263,20 +262,25 @@ Lets walk through the code:
 There are many ways to generate source maps, but webpack has a unique way of its own.
 When you generate your own source map in webpack it is crucial to pay attention to :
 
- - The paths. Some are relative and some are absolute. Get them wrong and you will not content properly.
+ - The paths. Some are relative and some are absolute. Get them wrong and you will not see your content properly.
  - You **have** to attach `source` as this data is lost after the loader is finished.
  - You must return an object rather than have a `//# sourceMappingURL=app.js.map` comment (like you usually do) since webpack uglifies the code and the comment will be lost.
 
-and now lets run webpack again. This time we need to run webpack with `-d` flag to generate source map. `webpack -d --progress --colors --output-filename dist/bundle.js --entry ./example-1/main.js`
+and now lets run webpack again.
+This time we need to run webpack with `-d` flag to generate source map.
+`webpack -d --progress --colors --output-filename dist/bundle.js --entry ./example-1/main.js`
+
 Now you should be able to open the sources tab in developers' area and fine `names.txt` there.
 You should also be able to put a breakpoint and step over.
 
-[sourcemap results](./images/sourcemap-results.png)
+![sourcemap results](./images/sourcemap-results.png)
 
 
 HOW COOL IS THAT?
 
 # What else can loaders do?
+
+Here are some things loaders can do:
 
  - Loaders can be async.
  - Loaders can get configurations and have access to webpack's configuration
@@ -293,6 +297,7 @@ We saw how to use it and how to extend it with loaders.
 We drilled down to a loader implementation and saw how powerful it can be without much effort thanks to webpack's awesome api.
 
 I'd love to hear about your experience with webpack in the comments below.
+
 
 # How to use this repo
 
