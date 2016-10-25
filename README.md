@@ -11,6 +11,7 @@ Webpack is an awesome module bundler that you should use if:
  - You want an easy and hassle free setup for web development
  - You want to join a big and rich community
 
+
 ## Webpack is NOT just a module bundler 
 
 Actually, Webpack is much more than just a module bundler.    
@@ -292,3 +293,12 @@ We saw how to use it and how to extend it with loaders.
 We drilled down to a loader implementation and saw how powerful it can be without much effort thanks to webpack's awesome api.
 
 I'd love to hear about your experience with webpack in the comments below.
+
+# How to use this repo
+
+This repo contains all the code showed above.
+To use it you have to have node version 4.x and above.
+
+ - run `npm install` to install the dependencies
+ - run `npm run compile` to run webpack
+ - run `npm run server` to open the `index.html` file
