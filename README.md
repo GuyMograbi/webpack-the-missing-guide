@@ -1,9 +1,18 @@
 # Webpack - the missing guide
 
+> The majesty in Webpack's simplicity explained. Ease your web development today! Learn Webpack by examples. 
 
+# Introduction
 
-In this post I quickly teach you how to use webpack and then I dive into loaders.    
-I will also show how to write a loader with source map. 
+The JavaScript world is bursting with new concepts that spawn ingenious libraries.   
+So much so that it is becoming harder to keep up with this community's pace.   
+
+Every now and then one of those tools changes the way we look at things and paves the way for new possibilities.    
+One such tool is Webpack which is simply referred to as a module bundler but is so much more - and as time goes it is getting more and more attention.      
+This is why I chose to focus on Webpack for this post.        
+
+By the end of this post you will learn how to use Webpack and then I will dive into loaders and their significance.      
+I will also show how to write a loader with a source map. 
 
 You can find the sources used in this post at [my github repository](https://github.com/GuyMograbi/webpack-the-missing-guide) alongside instructions on how to use it. 
 
@@ -14,6 +23,9 @@ Webpack is an awesome module bundler that you should use if:
  - You are publishing a reusable library (e.g. twitter's bootstrap)
  - You want an easy and hassle free setup for web development
  - You want to join a big and rich community
+ 
+Webpack is getting more and more attention. It has become the default for [angular2 build system](https://github.com/angular/angular-cli#webpack-update) 
+and its [npm stats](https://npm-stat.com/charts.html?package=webpack) show a very clear incline.   
 
 ## Webpack is NOT just a module bundler 
 
