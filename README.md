@@ -1,7 +1,11 @@
 # Webpack - the missing guide
 
+
+
 In this post I quickly teach you how to use webpack and then I dive into loaders.    
 I will also show how to write a loader with source map. 
+
+You can find the sources used in this post at [my github repository](https://github.com/GuyMograbi/webpack-the-missing-guide) alongside instructions on how to use it. 
 
 ## Why webpack
 
