@@ -2,7 +2,7 @@
 
 > The majesty in Webpack's simplicity explained. Ease your web development today! Learn Webpack by examples. 
 
-![feature image](http://placehold.it/1000x600)
+![feature image](images/feature-cover.jpg)
 
 # Introduction
 
